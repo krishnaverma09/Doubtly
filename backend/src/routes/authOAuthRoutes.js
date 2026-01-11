@@ -3,12 +3,20 @@ const passport = require("passport");
 const generateToken = require("../utils/generateToken");
 
 router.get("/google", (req, res, next) => {
+  if (req.query.role=="student") {
   const state = req.query.role || "student";
   passport.authenticate("google", {
     scope: ["profile", "email"],
     state: state,
   })(req, res, next);
-});
+}
+else{
+   const state = req.query.role || "teacher";
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    state: state,
+  })(req, res, next);
+}});
 
 router.get(
   "/google/callback",

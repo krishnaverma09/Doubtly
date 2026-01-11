@@ -1,10 +1,16 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { LogOut, Bell, Zap } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
 
   if (!user) return null;
 
@@ -27,7 +33,7 @@ const Navbar = () => {
         </div>
 
         <button 
-          onClick={logout}
+          onClick={handleLogout}
           className="logout-minimal"
           title="Logout"
           style={{ background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer', display: 'flex', alignItems: 'center', marginLeft: '10px' }}
