@@ -3,12 +3,24 @@ import { ThumbsUp, MessageSquare, Edit2, Trash2, CheckCircle, Clock, AlertCircle
 
 const DoubtCard = ({ doubt, user, onUpvote, onEdit, onDelete, onAnswer, onEditAnswer, onDeleteAnswer, onImageClick }) => {
   const [showReplies, setShowReplies] = useState(false);
-  const isUpvoted = (doubt.upvotes || []).includes(user.id || user._id);
-  const isOwner = (doubt.student?._id || doubt.student) === user.id;
+  const userId = user._id || user.id;
+  const isUpvoted = (doubt.upvotes || []).includes(userId);
+  const studentId = doubt.student?._id || doubt.student;
+  const isOwner = studentId === userId;
   
-  const myAnswer = (doubt.answers || []).find(a => (a.teacher?._id || a.teacher) === user.id);
+  const myAnswer = (doubt.answers || []).find(a => (a.teacher?._id || a.teacher) === userId);
   const isAnsweredByMe = !!myAnswer;
   const hasAnswers = doubt.answers && doubt.answers.length > 0;
+
+  // Debug logging
+  console.log('DoubtCard Debug:', {
+    userId,
+    studentId,
+    isOwner,
+    userRole: user.role,
+    answersLength: doubt.answers?.length,
+    shouldShowButtons: user.role === 'student' && isOwner && (doubt.answers?.length === 0)
+  });
 
   const getStatusBadge = (status) => {
     if (!hasAnswers && status === 'answered') {
@@ -86,7 +98,7 @@ const DoubtCard = ({ doubt, user, onUpvote, onEdit, onDelete, onAnswer, onEditAn
                         <span className="reply-date">{new Date(ans.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
-                    {user.role === 'teacher' && (ans.teacher?._id || ans.teacher) === user.id && (
+                    {user.role === 'teacher' && (ans.teacher?._id || ans.teacher) === userId && (
                       <div style={{ display: 'flex', gap: '8px' }}>
                         <button onClick={() => onEditAnswer(doubt, ans)} className="reply-action-btn"><Edit2 size={14} /></button>
                         <button onClick={() => onDeleteAnswer(doubt._id)} className="reply-action-btn delete"><Trash2 size={14} /></button>

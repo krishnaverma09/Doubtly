@@ -3,20 +3,12 @@ const passport = require("passport");
 const generateToken = require("../utils/generateToken");
 
 router.get("/google", (req, res, next) => {
-  if (req.query.role=="student") {
-  const state = req.query.role || "student";
+  const role = req.query.role || "student";
   passport.authenticate("google", {
     scope: ["profile", "email"],
-    state: state,
+    state: role,
   })(req, res, next);
-}
-else{
-   const state = req.query.role || "teacher";
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-    state: state,
-  })(req, res, next);
-}});
+});
 
 router.get(
   "/google/callback",
@@ -24,7 +16,16 @@ router.get(
   (req, res) => {
     const token = generateToken(req.user._id);
     const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
-    res.redirect(`${frontendUrl}/oauth-success?token=${token}`);
+    // Pass token and user info to frontend
+    const userInfo = encodeURIComponent(JSON.stringify({
+      _id: req.user._id,
+      id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+      role: req.user.role,
+      avatar: req.user.avatar,
+    }));
+    res.redirect(`${frontendUrl}/oauth-success?token=${token}&user=${userInfo}`);
   }
 );
 

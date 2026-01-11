@@ -10,8 +10,19 @@ const OAuthSuccess = () => {
 
   useEffect(() => {
     const token = searchParams.get("token");
+    const userStr = searchParams.get("user");
 
-    if (token) {
+    if (token && userStr) {
+      try {
+        const user = JSON.parse(decodeURIComponent(userStr));
+        login({ ...user, token });
+        navigate("/dashboard", { replace: true });
+      } catch (error) {
+        console.error("Failed to parse user data", error);
+        navigate("/login", { replace: true });
+      }
+    } else if (token) {
+      // Fallback: fetch user profile if no user data in URL
       fetchUserProfile(token)
         .then((user) => {
           login({ ...user, token });
