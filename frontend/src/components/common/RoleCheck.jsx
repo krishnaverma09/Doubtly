@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AuthContext } from "../../context/AuthContextCreator";
+import { AuthContext } from "../../context/AuthContext";
 import { checkTeacherAccess } from "../../services/auth.service";
 
 const RoleCheck = () => {

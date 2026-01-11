@@ -217,7 +217,7 @@ const handleDeleteAnswer = async (id) => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          {user.role === 'student' && (
+          {user?.role === 'student' && (
             <button className="ask-btn" onClick={() => setShowAskModal(true)}>
               <Plus size={20} />
               Ask a Doubt
