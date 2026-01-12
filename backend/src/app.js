@@ -4,16 +4,16 @@ const cors = require("cors");
 const passport = require("passport");
 const connectDB = require("./config/db");
 
-// Load env vars early for serverless/runtime
+
 dotenv.config();
 require("./config/passport");
 
-// Connect to database once per cold start
+
 connectDB();
 
 const app = express();
 
-// Allow configurable frontend origins (comma-separated) or default to * for local dev
+
 const allowedOrigins = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(",").map((o) => o.trim())
   : "*";

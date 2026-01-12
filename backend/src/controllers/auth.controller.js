@@ -18,7 +18,7 @@ exports.registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password, // ✅ let model handle hashing
+      password, 
       role,
     });
 
@@ -39,22 +39,22 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1️⃣ Check if user exists
+   
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    // 2️⃣ Compare password
+   
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    // 3️⃣ Generate JWT
+   
         const token = generateToken(user._id);
 
-    // 4️⃣ Send response
+    
     res.json({
       user: {
         id: user._id,

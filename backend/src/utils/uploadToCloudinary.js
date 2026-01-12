@@ -6,7 +6,7 @@ const uploadToCloudinary = (fileBuffer, folder, resourceType) => {
     const stream = cloudinary.uploader.upload_stream(
       {
         folder,
-        resource_type: resourceType, // image | video | raw
+        resource_type: resourceType, 
       },
       (error, result) => {
         if (result) resolve(result);

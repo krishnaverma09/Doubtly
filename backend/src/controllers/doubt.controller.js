@@ -1,9 +1,7 @@
 const Doubt = require("../models/Doubt");
 const uploadToCloudinary = require("../utils/uploadToCloudinary");
 
-// @desc    Student raises a doubt
-// @route   POST /api/doubts
-// @access  Student only (JWT)
+
   exports.createDoubt = async (req, res) => {
   try {
     if (req.user.role !== "student") {
@@ -51,18 +49,16 @@ const uploadToCloudinary = require("../utils/uploadToCloudinary");
   }
 };
 
-// @desc    Get doubts (everyone sees all doubts)
-// @route   GET /api/doubts
-// @access  Protected
+
 exports.getDoubts = async (req, res) => {
   try {
-    // Everyone sees all doubts now
+    
     const doubts = await Doubt.find()
       .populate("student", "name email")
       .populate("answers.teacher", "name email")
       .sort({ createdAt: -1 });
 
-    // Ensure status is consistent with answer existence (handles legacy data)
+    
     const processedDoubts = doubts.map(doubt => {
       const d = doubt.toObject();
       if ((!d.answers || d.answers.length === 0) && d.status === 'answered') {
@@ -77,9 +73,7 @@ exports.getDoubts = async (req, res) => {
   }
 };
 
-// @desc    Teacher answers a doubt
-// @route   PATCH /api/doubts/:id/answer
-// @access  Teacher only
+
 exports.answerDoubt = async (req, res) => {
   try {
     if (req.user.role !== "teacher") {
@@ -91,7 +85,7 @@ exports.answerDoubt = async (req, res) => {
       return res.status(404).json({ message: "Doubt not found" });
     }
 
-    // Check if teacher has already answered
+
     const alreadyAnswered = doubt.answers.find(
       (a) => a.teacher.toString() === req.user.id
     );
@@ -139,9 +133,7 @@ exports.answerDoubt = async (req, res) => {
   }
 };
 
-// @desc    Toggle upvote on a doubt
-// @route   PUT /api/doubts/:id/upvote
-// @access  Protected
+
 exports.toggleUpvote = async (req, res) => {
   try {
     const doubt = await Doubt.findById(req.params.id);
@@ -150,25 +142,25 @@ exports.toggleUpvote = async (req, res) => {
       return res.status(404).json({ message: "Doubt not found" });
     }
 
-    // Check if doubt has already been upvoted by this user
+    
     if (doubt.upvotes.includes(req.user.id)) {
-      // Remove upvote
+      
       doubt.upvotes = doubt.upvotes.filter(
         (id) => id.toString() !== req.user.id
       );
     } else {
-      // Add upvote
+      
       doubt.upvotes.push(req.user.id);
     }
 
     await doubt.save();
-    res.json(doubt.upvotes); // Return updated upvotes array
+    res.json(doubt.upvotes); 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// @desc    Update a doubt (student only, before answer)
+
 exports.updateDoubt = async (req, res) => {
   const { title, subject, description } = req.body;
 
@@ -178,12 +170,12 @@ exports.updateDoubt = async (req, res) => {
     return res.status(404).json({ message: "Doubt not found" });
   }
 
-  // Ownership check
+
   if (doubt.student.toString() !== req.user._id.toString()) {
     return res.status(403).json({ message: "Not authorized" });
   }
 
-  // Cannot edit after answered
+
   if (doubt.status !== "open") {
     return res.status(400).json({ message: "Cannot edit answered doubt" });
   }
@@ -196,7 +188,7 @@ exports.updateDoubt = async (req, res) => {
   res.json(updated);
 };
 
-// @desc    Delete a doubt (student only, before answer)
+
 exports.deleteDoubt = async (req, res) => {
   const doubt = await Doubt.findById(req.params.id);
 
@@ -216,7 +208,7 @@ exports.deleteDoubt = async (req, res) => {
   res.json({ message: "Doubt deleted successfully" });
 };
 
-// @desc    Edit answer (teacher only)
+
 exports.editAnswer = async (req, res) => {
   const { answer } = req.body;
 
@@ -240,7 +232,7 @@ exports.editAnswer = async (req, res) => {
   res.json(doubt);
 };
 
-// @desc    Delete answer (teacher only)
+
 exports.deleteAnswer = async (req, res) => {
   const doubt = await Doubt.findById(req.params.id);
 

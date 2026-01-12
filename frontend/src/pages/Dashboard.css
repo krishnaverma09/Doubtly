@@ -18,7 +18,7 @@
   font-family: 'Inter', sans-serif;
 }
 
-/* Header Section */
+
 .dashboard-header {
   padding: 40px 5%;
   max-width: 1400px;
@@ -37,7 +37,7 @@
   display: block;
 }
 
-/* Search and Ask Action */
+
 .action-bar {
   display: flex;
   gap: 20px;
@@ -95,7 +95,7 @@
   transform: translateY(-2px);
 }
 
-/* Filter Chips */
+
 .filters-section {
   display: flex;
   gap: 12px;
@@ -129,7 +129,7 @@
   background: #f3f4f6;
 }
 
-/* Grid Layout */
+
 .doubts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -140,7 +140,7 @@
   align-items: start;
 }
 
-/* Doubt Card */
+
 .doubt-card {
   background: white;
   border-radius: var(--border-radius);
@@ -211,7 +211,7 @@
   object-fit: cover;
 }
 
-/* Reply Section */
+
 .reply-section {
   background: #f8fafc;
   border-radius: 12px;
@@ -306,7 +306,6 @@
   color: var(--text-muted);
 }
 
-/* Floating Action Button for Teachers */
 .fab {
   position: fixed;
   bottom: 30px;
@@ -324,7 +323,7 @@
   border: none;
 }
 
-/* Modal / Form Styling (Simplistic) */
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -378,7 +377,7 @@
     cursor: pointer;
 }
 
-/* Navbar specific */
+
 .navbar {
   background: white;
   padding: 12px 5%;
@@ -443,7 +442,7 @@
   object-fit: cover;
 }
 
-/* Image Preview Modal */
+
 .image-preview-overlay {
   z-index: 2000;
   display: flex;
@@ -511,7 +510,7 @@
   }
 }
 
-/* Replies List & Toggle Styles */
+
 .replies-container {
   margin-top: 15px;
   border-top: 1px solid #f1f5f9;

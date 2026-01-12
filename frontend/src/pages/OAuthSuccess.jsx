@@ -22,7 +22,7 @@ const OAuthSuccess = () => {
         navigate("/login", { replace: true });
       }
     } else if (token) {
-      // Fallback: fetch user profile if no user data in URL
+     
       fetchUserProfile(token)
         .then((user) => {
           login({ ...user, token });

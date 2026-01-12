@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 
-// ✅ THIS CONTEXT OBJECT IS THE SINGLE SOURCE
+
 export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {

@@ -16,7 +16,7 @@ router.get(
   (req, res) => {
     const token = generateToken(req.user._id);
     const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
-    // Pass token and user info to frontend
+    
     const userInfo = encodeURIComponent(JSON.stringify({
       _id: req.user._id,
       id: req.user._id,

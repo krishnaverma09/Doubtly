@@ -13,7 +13,7 @@ passport.use(
     async (req, accessToken, refreshToken, profile, done) => {
       try {
         const email = profile.emails[0].value;
-        // Get role from state parameter (passed during OAuth initiation)
+       
         const role = (req.query.state && req.query.state !== 'undefined') ? req.query.state : "student";
 
         let user = await User.findOne({ email });
@@ -30,7 +30,7 @@ passport.use(
         } else if (!user.googleId) {
           user.googleId = profile.id;
           if (!user.avatar && avatar) user.avatar = avatar;
-          // Update role only if user doesn't have one or is switching roles
+          
           if (role && user.role !== role) user.role = role;
           await user.save();
         }

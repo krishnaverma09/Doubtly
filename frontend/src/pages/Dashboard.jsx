@@ -29,14 +29,14 @@ import "./Dashboard.css";
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
-  const [editingAnswer, setEditingAnswer] = useState(null); // { doubtId, text }
+  const [editingAnswer, setEditingAnswer] = useState(null); 
   const [doubts, setDoubts] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("All");
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [sortBy, setSortBy] = useState("Newest");
   const [loading, setLoading] = useState(true);
 
-  // Student doubt form
+  
   const [formData, setFormData] = useState({
     title: "",
     subject: "",
@@ -45,7 +45,7 @@ const Dashboard = () => {
 
   const [files, setFiles] = useState([]);
 
-  // 🔹 Edit state (NEW)
+ 
   const [editingDoubt, setEditingDoubt] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
 
@@ -64,7 +64,7 @@ const Dashboard = () => {
     }
   };
 
-  // ================= CREATE DOUBT =================
+  
   const handleCreateDoubt = async (e) => {
     e.preventDefault();
 
@@ -85,7 +85,7 @@ const Dashboard = () => {
     }
   };
 
-  // ================= ANSWER DOUBT =================
+ 
   const handleAnswer = async (id, answer, files) => {
     try {
       const form = new FormData();
@@ -99,7 +99,7 @@ const Dashboard = () => {
     }
   };
 
-  // ================= EDIT / DELETE (NEW) =================
+  
   const handleUpdateDoubt = async (e) => {
     e.preventDefault();
     try {
@@ -156,7 +156,7 @@ const handleDeleteAnswer = async (id) => {
     }
   };
 
-  // Filter & Sort Logic
+  
   const SUBJECTS = ["Maths", "DSA", "Web Dev", "Database", "AI ML", "Other"];
   const categories = ["All", ...SUBJECTS];
   const statuses = ["All", "Open", "Answered"];
@@ -291,7 +291,7 @@ const handleDeleteAnswer = async (id) => {
         </div>
       </header>
 
-      {/* ================= ASK DOUBT MODAL ================= */}
+      
       {showAskModal && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -353,7 +353,7 @@ const handleDeleteAnswer = async (id) => {
         </div>
       )}
 
-      {/* ================= EDIT DOUBT MODAL ================= */}
+      
       {editingDoubt && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -404,7 +404,7 @@ const handleDeleteAnswer = async (id) => {
         </div>
       )}
 
-      {/* ================= TEACHER ANSWER MODAL ================= */}
+      
       {answeringDoubt && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -445,7 +445,7 @@ const handleDeleteAnswer = async (id) => {
         </div>
       )}
 
-      {/* ================= EDIT ANSWER MODAL ================= */}
+      
       {editingAnswer && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -471,7 +471,7 @@ const handleDeleteAnswer = async (id) => {
           </div>
         </div>
       )}
-      {/* ================= IMAGE PREVIEW MODAL ================= */}
+    
       {previewImage && (
         <div className="modal-overlay image-preview-overlay" onClick={() => setPreviewImage(null)}>
           <div className="image-preview-container" onClick={(e) => e.stopPropagation()}>
